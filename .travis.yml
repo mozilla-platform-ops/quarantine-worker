@@ -29,7 +29,7 @@ deploy:
 notifications:
   irc:
     channels:
-      - "irc.mozilla.org#releng"
+      - "irc.mozilla.org#releng-bots"
     on_failure: always
     on_success: change
     template:
