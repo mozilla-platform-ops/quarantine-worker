@@ -1,0 +1,25 @@
+language: go
+go:
+- 1.10.2
+env:
+- CGO_ENABLED=0 GIMME_OS=linux GIMME_ARCH=386
+- CGO_ENABLED=0 GIMME_OS=linux GIMME_ARCH=amd64
+- CGO_ENABLED=0 GIMME_OS=linux GIMME_ARCH=arm
+- CGO_ENABLED=0 GIMME_OS=darwin GIMME_ARCH=amd64
+- CGO_ENABLED=0 GIMME_OS=windows GIMME_ARCH=amd64
+- CGO_ENABLED=0 GIMME_OS=windows GIMME_ARCH=386
+install:
+- test $GIMME_OS.$GIMME_ARCH != linux.amd64 || go get github.com/gordonklaus/ineffassign
+script:
+- test $GIMME_OS.$GIMME_ARCH != linux.amd64 || ${GOPATH}/bin/ineffassign .
+before_deploy:
+- source .travis_rename_releases.sh
+deploy:
+  provider: releases
+  api_key:
+    secure: LqG0DGyspiXcecMDwHUYbkgEP8/MVapQ7YqspA64GIot0dYh5KARrdv7xAaqoOo9YtYJCuj913IvXCvb5SDmvzSJiM3AWVvJ8902Y8LwtF5csHyuc5xL2tewAeNNxh/ElDnLtt/MLdyz50yRHOUmiK/XQbi3LQpLG+7zkrox9w0ZVWtMqO+uG1rmueajOUwp0J+wWmFyNxD0DO0GBRg/rcfugihKt5OE+9lN5DFi7nfQgxgmX07WHWnJxv5SU0L2b6he8Aw4zp02quOVjMmyzeYwcEDAIIr6sD2rChPoMfa6EuB2t8NPEq86U4Q1u6oUnHMs4QNSPi9Im4hajNJQjJJvGoBX+pI3gFRS6wOCXpInozA09Eyn5astL/tMcwo4u03t+a7NXAnMQMRKuXnUOwFNF+TBiyMGutX1pHvHof1kMffaQ0lSpMTPpDrfRN/qO1Cuy3t/aOOUXTwqBCMrHGh848A7HaLeSWQ1xf7lTzV5PD3vtXibo3k78347knKNAUSJqGr3qHJvk/Dy3u0GZXX5tDp+sLg26vUoH9tnGMPOXQMSLERklPQenHWdTD1b5y3FFbeDigV0Xbm0dfN21vf1FgAhUabbTvaImhMxOE9zwEe+5+yCKgOBn3ok+gobCQRmxxgITyWbnorCyBqRsCLx7BaoY8TkFVIrOg+8Z4g=
+  file:
+    - "${RELEASE_FILE}"
+  skip_cleanup: true
+  on:
+    repo: mozilla-platform-ops/quarantine-worker
