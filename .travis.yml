@@ -12,7 +12,7 @@ install:
 - test $GIMME_OS.$GIMME_ARCH != linux.amd64 || go get github.com/gordonklaus/ineffassign
 script:
 - test $GIMME_OS.$GIMME_ARCH != linux.amd64 || ${GOPATH}/bin/ineffassign .
-- go install ./...
+- go get ./...
 before_deploy:
 - source .travis_rename_releases.sh
 deploy:
