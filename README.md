@@ -9,4 +9,5 @@ one at http://mozilla.org/MPL/2.0/.
 Command line tool for quarantining taskcluster workers
 
 Usage: quarantine-worker provisionerId workerType workerGroup workerId quarantineTime
+
 quarantineTime format: hhmmss. For exemple, if you want to quarantine a worker for 30 days, you will need to provide 720h as value for quarantineTime
